@@ -1,0 +1,105 @@
+/* GOLD PRICE PREDICTION */
+
+#import python libraries
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+from sklearn.cluster import KMeans
+from sklearn.preprocessing import StandardScaler
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestRegressor
+from sklearn import metrics
+
+# Data collection and processing
+# Get the actual filename after upload
+from google.colab import files
+uploaded = files.upload()
+
+import pandas as pd
+import io
+data = pd.read_csv(io.BytesIO(uploaded['Gold.csv']))
+
+# getting some basic information about the data
+import pandas as pd
+df=pd.read_csv('Gold.csv',na_values=('??,???'))
+print(df.info())
+
+ #print first 10 rows in the dataframe
+print(data.head(10))
+
+# the columns in the dataset
+print(data.columns)
+
+# Drop missing values or handle them appropriately
+data = data.dropna()
+
+# getting the statistical measures of the data
+print(data.describe())
+
+# Check the distribution of the 'Volume' column
+print(data['Volume'].value_counts())
+
+# Fill missing values in the 'Volume' column with the mode (most frequent value)
+data['Volume'].fillna(data['Volume'].mode()[0], inplace=True)
+
+# Check for any remaining missing values in the dataset
+missing_values = data.isna().sum()
+print(missing_values)
+#Cheking for null values of each column
+
+import pandas as pd
+d1={'city':['Mangalore','Bangalore','Mysore'],'temp':[35,30,9]}
+d2={'city':['Mangalore','Bangalore','Mysore'],'humidity':[60,40,30]}
+df1=pd.DataFrame(d1)
+df2=pd.DataFrame(d2)
+print(df1)
+print(df2)
+
+# ScatterPlot
+import matplotlib.pyplot as plt
+
+plt.scatter(data['Open'], data['Close/Last'])
+plt.title('Scatter Plot of Open vs. Close Prices')
+plt.xlabel('Open Price')
+plt.ylabel('Close/Last Price')
+plt.show()
+
+#SineWave
+import numpy as np
+
+x = np.linspace(0, 10, 100)
+y = np.sin(x)
+
+plt.plot(x, y)
+plt.title('Sine Wave')
+plt.xlabel('X Axis')
+plt.ylabel('Y Axis')
+plt.show()
+
+# BarPlot
+plt.figure(figsize=(10,5))
+plt.bar(data['Date'], data['Volume'])
+plt.title('Trading Volume Over Time')
+plt.xlabel('Date')
+plt.ylabel('Volume')
+plt.xticks(rotation=45)
+plt.show()
+
+# Histogram
+plt.hist(data['Close/Last'], bins=20)
+plt.title('Histogram of Closing Prices')
+plt.xlabel('Close/Last Price')
+plt.ylabel('Frequency')
+plt.show()
+
+# Define categories based on closing price ranges
+price_ranges = pd.cut(data['Close/Last'], bins=[1600, 1650, 1700, 1750], labels=['1600-1650', '1650-1700', '1700-1750'])
+
+# Count the occurrences of each category
+range_counts = price_ranges.value_counts()
+
+# Plot the pie chart
+plt.pie(range_counts, labels=range_counts.index, autopct='%1.1f%%')
+plt.title('Distribution of Closing Prices')
+plt.show()
