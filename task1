@@ -126,7 +126,7 @@ print(df2)
 import matplotlib.pyplot as plt
 
 plt.scatter(data['Open'], data['Close/Last'])
-plt.title('Scatter Plot of Open vs. Close Prices')
+plt.title('Scatter Plot of Open vs. Close Prices
 plt.xlabel('Open Price')
 plt.ylabel('Close/Last Price')
 plt.show()
